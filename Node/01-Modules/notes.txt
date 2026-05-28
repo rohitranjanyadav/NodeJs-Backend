@@ -1,0 +1,56 @@
+JS Modules (Node.js)
+--------------------
+What is a module?
+- A module is a file (or package) that encapsulates code and exposes a public API.
+- In Node.js, each file is its own module.
+- Modules help keep code organized, reusable, and scoped.
+
+Module systems in JS
+- CommonJS (Node.js default): uses require() and module.exports
+- ES Modules (modern JS): uses import and export
+
+CommonJS basics
+- Import: const x = require('./path')
+- Export: module.exports = { fn, value }
+- Each module has its own scope; variables are not global by default.
+
+ES Module basics
+- Import: import { fn } from './path.js'
+- Export: export const fn = () => {}
+- Use "type": "module" in package.json or .mjs extension.
+
+Core (built-in) Node.js modules
+- fs: file system operations (read/write files, streams, watch)
+- path: file path utilities (join, resolve, dirname, extname)
+- os: OS info (cpus, memory, temp dir, platform)
+- http/https: create servers and make HTTP requests
+- url: parse and format URLs, URLSearchParams
+- events: event emitter pattern (EventEmitter class)
+- stream: handle streaming data (Readable/Writable/Transform)
+- crypto: hashing, encryption, random bytes
+- util: helpers like promisify, format, types
+- timers: setTimeout, setInterval, setImmediate
+- child_process: run external commands or spawn processes
+- readline: read input line-by-line from stdin
+
+Quick examples
+1) fs (read/write)
+const fs = require('fs');
+fs.writeFileSync('note.txt', 'Hello');
+const data = fs.readFileSync('note.txt', 'utf8');
+
+2) path (safe file paths)
+const path = require('path');
+const filePath = path.join(__dirname, 'data', 'file.txt');
+
+3) http (simple server)
+const http = require('http');
+http.createServer((req, res) => {
+	res.writeHead(200, { 'Content-Type': 'text/plain' });
+	res.end('OK');
+}).listen(3000);
+
+Notes
+- Prefer async fs methods for non-blocking I/O in real apps.
+- Use path.join/resolve instead of manual string concatenation.
+- For ES Modules in Node, add file extensions in imports (./file.js).
