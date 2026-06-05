@@ -1,7 +1,8 @@
 const express = require("express");
+const fs = require("node:fs");
 
 const app = express();
-const PORT = 3000;
+const PORT = 4000;
 
 // In Memory DB
 const books = [
@@ -12,8 +13,35 @@ const books = [
 // Middleware
 app.use(express.json());
 
+app.use(function (req, res, next) {
+  const log = `\n[${Date.now()}] ${req.method} ${req.path}`;
+  fs.appendFileSync("logs.txt", log, "utf-8");
+  console.log("Logged!");
+  next();
+});
+
+function customMiddleware(req, res, next) {
+  console.log("I am a custom Middleware");
+  next();
+}
+
+// Path Middleware->GET,POST any request /books
+app.use("/books", function (req, res, next) {
+  console.log("Path match middleware");
+  next();
+});
+
+// app.use(function(req,res,next){
+//   console.log("I am Middleware A")
+//   next()
+// })
+// app.use(function(req,res,next){
+//   console.log("I am Middleware B")
+//   next()
+// })
+
 // Routes
-app.get("/books", (req, res) => {
+app.get("/books", customMiddleware, (req, res) => {
   res.json(books);
 });
 
