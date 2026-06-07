@@ -2,8 +2,6 @@ require("dotenv/config");
 const db = require("./db");
 const { usersTable } = require("./drizzle/schema");
 
-
-
 async function getAllUsers() {
   const users = await db.select().from(usersTable);
   console.log(`Users in DB`, users);
