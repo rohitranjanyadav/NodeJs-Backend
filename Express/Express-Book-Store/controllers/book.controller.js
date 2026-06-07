@@ -45,7 +45,7 @@ exports.createBook = async function (req, res) {
 exports.deleteBookById = async function (req, res) {
   const id = req.params.id;
 
-  await db.delete(booksTable).where(eq(booksTable.id, id)); 
+  await db.delete(booksTable).where(eq(booksTable.id, id));
 
-  return res.status(200).json({ message: "Book deleted", deletedBook });
+  return res.status(200).json({ message: "Book deleted" });
 };
