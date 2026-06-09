@@ -1,6 +1,7 @@
 const booksTable = require("../models/book.model");
 const db = require("../db");
 const { eq, ilike, sql } = require("drizzle-orm");
+const authorsTable = require("../models/author.model");
 
 exports.getAllBooks = async function (req, res) {
   const search = req.query.search;
@@ -27,6 +28,7 @@ exports.getBookById = async function (req, res) {
     .select()
     .from(booksTable)
     .where((table) => eq(table.id, id))
+    .leftJoin(authorsTable, eq(booksTable.authorId, authorsTable.id))
     .limit(1);
 
   if (!book)
